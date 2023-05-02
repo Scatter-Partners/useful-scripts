@@ -4,18 +4,23 @@ import json
 input_folder = "json"
 output_folder = "output"
 
+if not os.path.exists(output_folder):
+    os.makedirs(output_folder)
+
 for filename in os.listdir(input_folder):
     #if filename.endswith(".json"):
     file_path = os.path.join(input_folder, filename)
     with open(file_path, "r", encoding="utf-8") as f:
         data = json.load(f)
-   
+
+    if filename.endswith(".json"):
+        filename = filename[:-5]   
     
     # Update JSON fields
-    data["name"] = f"Name {i}"
-    data["image"] = f"ipfs://REPLACEME/{i}.png"
+    data["name"] = f"Name {filename}"
+    data["image"] = f"ipfs://REPLACEME/{filename}.png"
     data["description"] = "Your description"
-    
+
     if "imageHash" in data:
         del data["imageHash"]
     if "dna" in data:
@@ -39,7 +44,7 @@ for filename in os.listdir(input_folder):
     if "collection" in data:
         del data["collection"]
     if "external_url" in data:
-        del data["external_url"]     
+        del data["external_url"]
     
     output_file_path = os.path.join(output_folder, filename)
     with open(output_file_path, "w", encoding="utf-8") as f:
