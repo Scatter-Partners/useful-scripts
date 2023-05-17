@@ -38,6 +38,8 @@ def main():
 
     for json_file in json_files:
         file_path = os.path.join(json_folder, json_file)
+        if json_file == '.DS_Store':  # Skip macOS .DS_Store files
+            continue
         try:
             with open(file_path, "r", encoding="utf-8") as f:
                 json_data = json.load(f)
