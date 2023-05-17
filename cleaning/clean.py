@@ -8,6 +8,8 @@ if not os.path.exists(output_folder):
     os.makedirs(output_folder)
 
 for filename in os.listdir(input_folder):
+    if filename == '.DS_Store':  # Skip macOS .DS_Store files
+        continue
     #if filename.endswith(".json"):
     file_path = os.path.join(input_folder, filename)
     with open(file_path, "r", encoding="utf-8") as f:
