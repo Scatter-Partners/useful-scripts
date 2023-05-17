@@ -39,7 +39,7 @@ def main():
     for json_file in json_files:
         file_path = os.path.join(json_folder, json_file)
         try:
-            with open(file_path, "r") as f:
+            with open(file_path, "r", encoding="utf-8") as f:
                 json_data = json.load(f)
                 attributes = json_data.get("attributes")
                 image = json_data.get("image")
