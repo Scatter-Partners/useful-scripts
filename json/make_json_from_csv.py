@@ -6,7 +6,7 @@ import json
 now = datetime.now()
 current_time = now.strftime("%m-%d-%Y-%I-%M-%S-%p")
 
-cid_hash_image = "REPLACE_ME"
+cid_hash_image = "REPLACEME"
 name = "Name #"
 description = "Your description"
 url = "https://scatter.art/"
