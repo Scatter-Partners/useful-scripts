@@ -9,7 +9,7 @@ for file in os.listdir():
     # Read the contents of the file
     contents = f.read()
   # Replace "REPLACEME" with "REPLACED"
-  contents = contents.replace("5,000", "5,000")
+  contents = contents.replace("REPLACEME", "REPLACED")
   # Open the file for writing
   with open(file, 'w') as f:
     # Write the modified contents to the file
