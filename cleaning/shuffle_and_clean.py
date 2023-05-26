@@ -11,6 +11,10 @@ random.seed(1234) # change this number if you want a different random order
 input_dir = "input"
 output_dir = "output"
 
+# Verify input directories exist
+assert os.path.isdir(os.path.join(input_dir, "json")), "The directory 'input/json' does not exist"
+assert os.path.isdir(os.path.join(input_dir, "images")), "The directory 'input/images' does not exist"
+
 # Find all JSON and image files
 json_files = [jf for jf in glob.glob(os.path.join(input_dir, "json", "*")) if not jf.endswith('.DS_Store')]
 image_files = [ifile for ifile in glob.glob(os.path.join(input_dir, "images", "*.png")) if not ifile.endswith('.DS_Store')]
