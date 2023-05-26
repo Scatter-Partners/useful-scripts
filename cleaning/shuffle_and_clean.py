@@ -12,12 +12,12 @@ input_dir = "input"
 output_dir = "output"
 
 # Find all JSON and image files
-json_files = glob.glob(os.path.join(input_dir, "json", "*"))
-image_files = glob.glob(os.path.join(input_dir, "images", "*.png"))
+json_files = [jf for jf in glob.glob(os.path.join(input_dir, "json", "*")) if not jf.endswith('.DS_Store')]
+image_files = [ifile for ifile in glob.glob(os.path.join(input_dir, "images", "*.png")) if not ifile.endswith('.DS_Store')]
 
-# Create dictionaries with basename as keys and full path as values
-json_files_dict = {os.path.basename(jf).split(".")[0]: jf for jf in json_files}
-image_files_dict = {os.path.basename(iff).split(".")[0]: iff for iff in image_files}
+# Create dictionaries with basename (without extension) as keys and full path as values
+json_files_dict = {os.path.splitext(os.path.basename(jf))[0]: jf for jf in json_files}
+image_files_dict = {os.path.splitext(os.path.basename(ifile))[0]: ifile for ifile in image_files}
 
 # Make sure the number of JSON and image files are the same
 assert set(json_files_dict.keys()) == set(image_files_dict.keys()), "The JSON and image file names should match"
@@ -27,7 +27,7 @@ os.makedirs(os.path.join(output_dir, "json"), exist_ok=True)
 os.makedirs(os.path.join(output_dir, "images"), exist_ok=True)
 
 # Create a list of pairs (json_file, image_file)
-pairs = list(zip(json_files_dict.values(), image_files_dict.values()))
+pairs = [(json_files_dict[key], image_files_dict[key]) for key in json_files_dict.keys()]
 random.shuffle(pairs)
 
 # Process the pairs
