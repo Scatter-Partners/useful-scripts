@@ -5,7 +5,7 @@ import random
 import shutil
 
 # Seed for randomness
-random.seed(1234) # change this number if you want a different random order
+random.seed(1234)  # change this number if you want a different random order
 
 # Directories
 input_dir = "input"
@@ -17,7 +17,7 @@ assert os.path.isdir(os.path.join(input_dir, "images")), "The directory 'input/i
 
 # Find all JSON and image files
 json_files = [jf for jf in glob.glob(os.path.join(input_dir, "json", "*")) if not jf.endswith('.DS_Store')]
-image_files = [ifile for ifile in glob.glob(os.path.join(input_dir, "images", "*.png")) if not ifile.endswith('.DS_Store')]
+image_files = [ifile for ifile in glob.glob(os.path.join(input_dir, "images", "*")) if not ifile.endswith('.DS_Store')]
 
 # Create dictionaries with basename (without extension) as keys and full path as values
 json_files_dict = {os.path.splitext(os.path.basename(jf))[0]: jf for jf in json_files}
@@ -42,16 +42,18 @@ for i, (json_file, image_file) in enumerate(pairs, start=1):
 
     # Update JSON fields
     data["name"] = f"Name #{i}"
-    data["image"] = f"ipfs://REPLACEME/{i}.png"
+    filename, file_extension = os.path.splitext(data['image'])
+    file_extension = file_extension or '.png'  # default to .png if no extension found
+    data["image"] = f"ipfs://REPLACEME/{i}{file_extension}"
     #data["description"] = "uncomment to add  description if you desire"
-    
-    for key in ["imageHash", "dna", "edition", "date", "custom_fields", "file_url", "id", 
+
+    for key in ["imageHash", "dna", "edition", "date", "custom_fields", "file_url", "id",
                 "seller_fee_basis_points", "compiler", "properties", "collection", "external_url"]:
         data.pop(key, None)
-            
-    # Save the updated JSON
+
+    # Save the updated JSON without file extension
     with open(os.path.join(output_dir, "json", f"{i}"), "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4)
 
     # Copy the corresponding image
-    shutil.copy(image_file, os.path.join(output_dir, "images", f"{i}.png"))
+    shutil.copy(image_file, os.path.join(output_dir, "images", f"{i}{file_extension}"))
