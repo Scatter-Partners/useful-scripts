@@ -1,3 +1,5 @@
+# This script will no longer work as OS now requires an API key and getting an OS API key is annoying
+
 import requests
 import time
 
