@@ -8,7 +8,7 @@ if not os.path.exists("output"):
 # Loop through all the .png files in the "input" folder
 i = 1
 for filename in os.listdir("input"):
-    if filename.endswith(".PNG"):
+    if filename.lower().endswith(".png"):
         # Construct the new filename as a zero-padded number
         new_filename = f"{i}.png"
         # Copy the file to the "output" folder with the new filename
